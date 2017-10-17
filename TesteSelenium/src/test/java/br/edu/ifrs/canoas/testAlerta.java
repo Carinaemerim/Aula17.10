@@ -62,4 +62,26 @@ public class testAlerta {
 		assertEquals ("A simple Alert", simpleAlert.getText());
 		simpleAlert.accept();
 	}
+	
+	@Test
+	public void testSimplePrompt(){
+		
+		WebElement element = driver.findElement(By.xpath("//*[@id=\"content\"]/p[11]/button"));
+		element.findElement(ByName("Cancel"));
+		
+		Alert promptAlert = driver.switchTo().alert();
+		assertEquals ("Do you like toolsqa?", promptAlert.getText());
+		promptAlert.accept();
+		
+	}
+
+	private By ByName(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private By ById(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
