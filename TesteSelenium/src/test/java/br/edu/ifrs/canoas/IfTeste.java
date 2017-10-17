@@ -3,6 +3,7 @@ package br.edu.ifrs.canoas;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class IfTeste {
 
@@ -30,6 +30,9 @@ public class IfTeste {
 	@BeforeClass
 	public static void setUpClass() {
 		System.setProperty("webdriver.chrome.driver" ,  ".\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
 	}
 	
 	@AfterClass
@@ -40,10 +43,7 @@ public class IfTeste {
 	
 	@Before
 	public void setUp(){
-		
-		driver.get("http://www.canoas.ifrs.edu.br/site");
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get("http://www.canoas.ifrs.edu.br/site/");
 	}
 	
 	@After
@@ -63,9 +63,9 @@ public class IfTeste {
 			
 			assertTrue(msg, !msg.toLowerCase().contains("not found"));
 			
-			} catch (MalformedURLException ex) {
+			} catch (MalformedURLException e) {
 				
-				fail(ex.getMessage());
+				fail(e.getMessage());
 			}
 		}
 		
@@ -94,16 +94,15 @@ public class IfTeste {
 		String response = "";
 		
 		try {
-			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.connect();
 			response = connection.getResponseMessage();
 			
 			connection.disconnect();
 		
-		} catch (IOException ex) {
-			Logger.getLogger(IfTeste.class.getName());
+		} catch (IOException e) {
 			
-			response = ex.getMessage();
+			response = e.getMessage();
 		}
 		System.out.println(url + "" + response);
 		return response;
